@@ -15,23 +15,20 @@
           default = pkgs.stdenvNoCC.mkDerivation {
             pname = "minimal-proxy";
             version = "1.0.0";
-            src = ./extension;
+            src = ./minimal-proxy-1.0.0.xpi;
 
-            nativeBuildInputs = [ pkgs.zip ];
-
-            buildPhase = ''
-              zip -r minimal-proxy.xpi . -x '*.git*'
-            '';
+            dontUnpack = true;
 
             installPhase = ''
               mkdir -p $out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}
-              cp minimal-proxy.xpi $out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/minimal-proxy@soy-oreocato.xpi
+              cp $src $out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/minimal-proxy@soy-oreocato.xpi
             '';
-
+            
             passthru = {
               addonId = "minimal-proxy@soy-oreocato";
               meta.mozPermissions = [ "proxy" "storage" ];
             };
+
           };
         });
     };
