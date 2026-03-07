@@ -38,7 +38,7 @@ In your `flake.nix`:
 **Note**: Replace "YOUR_USER" with your NixOS user.
 
 ### 2. Install the extension in Home Manager
-Firefox  requires extensions to be installed under a specific profile path.
+Firefox (Firefox 136+ / ESR 128.8+) requires extensions to be installed under a specific profile path.
 Home Manager's `programs.firefox` module handles this automatically:
 ```nix
 # home.nix
@@ -74,7 +74,7 @@ Or, if you manage Home Manager as a NixOS module:
 sudo nixos-rebuild switch --flake .#YOUR_HOST
 ```
 
-For older Firefox versions ((> Firefox 136 / ESR 128.8)), you must grant the permission manually:
+For older Firefox versions (> Firefox 136 / ESR 128.8), you must grant the permission manually:
 1. Go to `about:addons` → **Minimal Proxy** → **Details**.
 2. Enable **Run in Private Windows**.
 ---
