@@ -1,0 +1,33 @@
+{
+  description = "Minimal Proxy - A Minimal Proxy Switch ready for NixOS";
+
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+  outputs = { self, nixpkgs }:
+    let
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
+    in {
+      packages = forAllSystems (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in {
+          default = pkgs.stdenvNoCC.mkDerivation {
+            pname = "minimal-proxy";
+            version = "1.0.0";
+            src = ./extension;
+
+            nativeBuildInputs = [ pkgs.zip ];
+
+            buildPhase = ''
+              zip -r minimal-proxy.xpi . -x '*.git*'
+            '';
+
+            installPhase = ''
+              mkdir -p $out/share/mozilla/extensions
+              cp minimal-proxy.xpi $out/share/mozilla/extensions/
+            '';
+          };
+        });
+    };
+}

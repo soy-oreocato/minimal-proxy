@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Minimal Proxy",
+  "version": "1.0.0",
+  "description": "A Minimal Proxy Switcher ready for NixOS",
+  "author": "oreocato",
+  "permissions": [
+    "proxy",
+    "storage"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-off-16.svg",
+      "32": "icons/icon-off-32.svg"
+    },
+    "default_title": "Minimal Proxy"
+  },
+  "icons": {
+    "48": "icons/icon-on-48.svg"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "minimal-proxy@soy-oreocato",
+      "strict_min_version": "91.0"
+    }
+  }
+}

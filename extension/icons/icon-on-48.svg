@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="48" height="48">
+  <!-- Línea nodo 1 (inferior izquierdo) → nodo 2 (superior centro) -->
+  <line x1="28" y1="100" x2="64" y2="30" stroke="#000" stroke-width="6" stroke-linecap="round"/>
+  <!-- Línea nodo 2 (superior centro) → nodo 3 (inferior derecho) -->
+  <line x1="64" y1="30" x2="100" y2="100" stroke="#000" stroke-width="6" stroke-linecap="round"/>
+  <!-- Nodo 1: inferior izquierdo -->
+  <circle cx="28" cy="100" r="17" fill="#000"/>
+  <!-- Nodo 2: superior centro -->
+  <circle cx="64" cy="30" r="17" fill="#000"/>
+  <!-- Nodo 3: inferior derecho -->
+  <circle cx="100" cy="100" r="17" fill="#000"/>
+</svg>

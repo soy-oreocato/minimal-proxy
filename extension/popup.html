@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 300px;
+    font: 13px/1.4 -apple-system, "Segoe UI", sans-serif;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    padding: 12px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+  /* Toggle switch */
+  .switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    inset: 0;
+    background: #333;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .slider::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+  }
+   .switch input:checked + .slider { background: #2ecc71; }
+   .switch input:checked + .slider::before { transform: translateX(20px); }
+   .switch.disabled { opacity: 0.5; cursor: not-allowed; }
+   .switch.disabled .slider { cursor: not-allowed; }
+  /* Status */
+  .status {
+    text-align: center;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+   .status.off { background: rgba(128,128,128,0.15); color: #808080; }
+   .status.on { background: rgba(46,204,113,0.15); color: #2ecc71; }
+  /* Proxy config */
+  .config {
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    gap: 6px;
+  }
+  .config label {
+    font-size: 11px;
+    color: #888;
+    grid-column: span 2;
+  }
+  input[type="text"], input[type="number"] {
+    background: #16213e;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #e0e0e0;
+    padding: 5px 8px;
+    font-size: 12px;
+    outline: none;
+  }
+   input:focus { border-color: #2ecc71; }
+  .presets {
+    margin-top: 8px;
+    display: flex;
+    gap: 4px;
+  }
+  .preset-btn {
+    flex: 1;
+    background: #16213e;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #aaa;
+    padding: 4px;
+    font-size: 10px;
+    cursor: pointer;
+  }
+   .preset-btn:hover { border-color: #2ecc71; color: #fff; }
+   /* Permission indicator */
+   .permission-info {
+     margin-top: 10px;
+     padding: 8px;
+     background: #16213e;
+     border-radius: 4px;
+     font-size: 11px;
+     border-left: 3px solid #888;
+   }
+   .permission-info.enabled {
+     border-left-color: #2ecc71;
+     color: #2ecc71;
+   }
+   .permission-info.disabled {
+     border-left-color: #808080;
+     color: #808080;
+   }
+</style>
+</head>
+<body>
+  <div class="header">
+    <span class="title">Minimal Proxy</span>
+    <label class="switch">
+      <input type="checkbox" id="toggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="status off" id="status">DIRECT — No Proxy</div>
+
+  <div class="config">
+    <label>Proxy address</label>
+    <input type="text" id="host" value="127.0.0.1" placeholder="host">
+    <input type="number" id="port" value="8080" placeholder="port" min="1" max="65535">
+  </div>
+
+   <div class="presets">
+     <button class="preset-btn" data-host="127.0.0.1" data-port="8080">A</button>
+     <button class="preset-btn" data-host="127.0.0.1" data-port="8081">B</button>
+     <button class="preset-btn" data-host="127.0.0.1" data-port="1080">C</button>
+   </div>
+
+   <div class="permission-info" id="privateWindowPermission" style="display: none;">
+     ✗ Run in private windows: Disabled
+   </div>
+
+<script src="popup.js"></script>
+</body>
+</html>

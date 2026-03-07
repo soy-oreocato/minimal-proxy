@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="32" height="32">
+  <!-- Línea nodo 1 → nodo 3 -->
+  <line x1="28" y1="64" x2="100" y2="64" stroke="#000" stroke-width="6" stroke-linecap="round"/>
+  <!-- Nodo 1: izquierdo -->
+  <circle cx="28" cy="64" r="17" fill="#000"/>
+  <!-- Nodo 3: derecho -->
+  <circle cx="100" cy="64" r="17" fill="#000"/>
+</svg>
