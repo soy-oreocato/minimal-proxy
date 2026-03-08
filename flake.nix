@@ -14,8 +14,8 @@
         in {
           default = pkgs.stdenvNoCC.mkDerivation {
             pname = "minimal-proxy";
-            version = "1.0.0";
-            src = ./minimal-proxy-1.0.0.xpi;
+            version = "1.1.0";
+            src = ./minimal-proxy-1.1.0.xpi;
 
             dontUnpack = true;
 
