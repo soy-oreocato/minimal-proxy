@@ -1,12 +1,13 @@
 {
   "manifest_version": 2,
   "name": "Minimal Proxy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Minimal Proxy Switcher ready for NixOS",
   "author": "oreocato",
   "permissions": [
     "proxy",
-    "storage"
+    "storage",
+    "<all_urls>"
   ],
   "background": {
     "scripts": ["background.js"],

@@ -7,28 +7,26 @@ const DEFAULT_PROXY = {
 
 let state = { enabled: false, proxy: DEFAULT_PROXY, hasPrivateWindowPermission: false };
 
-function applyProxy() {
-  let proxyConfig;
-  if (state.enabled) {
-    proxyConfig = {
-      proxyType: "manual",
-      http: `${state.proxy.host}:${state.proxy.port}`,
-      ssl: `${state.proxy.host}:${state.proxy.port}`,
-      ftp: `${state.proxy.host}:${state.proxy.port}`,
-      socks: `${state.proxy.host}:${state.proxy.port}`,
-      socksVersion: 5,
-      noProxyFor: ["localhost", "127.0.0.1"]
-    };
-  } else {
-    proxyConfig = { proxyType: "system" };
-  }
+// Listener that Firefox calls on every HTTP/HTTPS request.
+// Returns the ProxyInfo based on current state.
+browser.proxy.onRequest.addListener(
+  (requestInfo) => {
+    if (state.enabled) {
+      return {
+        type: "http",
+        host: state.proxy.host,
+        port: state.proxy.port
+      };
+    }
+    return { type: "direct" };
+  },
+  { urls: ["<all_urls>"] }
+);
 
-  browser.proxy.settings.set({ value: proxyConfig })
-    .then(() => {
-      updateIcon();
-    })
-    .catch(() => {});
-}
+// Log proxy errors for debugging
+browser.proxy.onError.addListener((error) => {
+  console.error("Proxy error:", error.message);
+});
 
 function updateIcon() {
    const color = state.enabled ? "#2ecc71" : "#808080";
@@ -63,7 +61,7 @@ function checkPrivateWindowPermission() {
        // If permission was revoked and proxy is enabled, disable it
        if (hadPermission && !isAllowed && state.enabled) {
          state.enabled = false;
-         applyProxy();
+         updateIcon();
        }
        
        saveState();
@@ -85,10 +83,10 @@ browser.storage.local.get("proxyState").then((data) => {
      state.hasPrivateWindowPermission = data.proxyState.hasPrivateWindowPermission || false;
    }
    checkPrivateWindowPermission();
-   applyProxy();
+   updateIcon();
 }).catch(() => {
    checkPrivateWindowPermission();
-   applyProxy();
+   updateIcon();
 });
 
 // Listen for messages from popup
@@ -107,7 +105,7 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
    if (msg.action === "toggle") {
      state.enabled = !state.enabled;
      saveState();
-     applyProxy();
+     updateIcon();
      sendResponse({ ...state });
      return true;
    }
@@ -115,7 +113,7 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
    if (msg.action === "updateProxy") {
      state.proxy = { ...state.proxy, ...msg.proxy };
      saveState();
-     if (state.enabled) applyProxy();
+     if (state.enabled) updateIcon();
      sendResponse({ ...state });
      return true;
    }
